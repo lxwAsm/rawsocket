@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 #include <iostream>
-#include "windows.h"
-#pragma comment(lib,"wsock32.lib")
+#include <winsock2.h>
+#pragma comment(lib,"ws2_32.lib")
 
 using namespace std;
 
@@ -26,22 +26,20 @@ USHORT checksum(USHORT *buffer, int size) {
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	WSAData wsaData;
-	auto Result = WSAStartup(MAKEWORD(2, 2), &wsaData);
-	if (Result == SOCKET_ERROR)
-	{
-		printf("WSAStartup failed with error %d\n", Result);
+	WSADATA wsaData;
+	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0){
+		printf("WSAStartup() error!");
 		return -1;
 	}
-
-	cout << "MaxSocket:" << wsaData.iMaxSockets << endl;
-	cout << "MaxUdpDg:" << wsaData.iMaxUdpDg << endl;
-	cout << "VersionInfo:" << wsaData.lpVendorInfo << endl;
-	cout << "Description:" << wsaData.lpVendorInfo << endl;
-	cout << "SystemStatus:" << wsaData.szSystemStatus << endl;
-	cout << "HighVersion:" << wsaData.wHighVersion << endl;
-	cout << "Version:" << wsaData.wVersion << endl;
+	printf("MaxSocket:%d\n",wsaData.iMaxSockets);
+	printf("MaxUdpDg:%d\n" ,wsaData.iMaxUdpDg);
+	printf("VersionInfo:%p\n",wsaData.lpVendorInfo);
+	printf("Description:%p\n",wsaData.lpVendorInfo);
+	printf("SystemStatus:%s\n",wsaData.szSystemStatus);
+	printf("HighVersion:%d\n",wsaData.wHighVersion);
+	printf("Version:%d\n",wsaData.wVersion);
 	WSACleanup();
+	getchar();
 	return 0;
 }
 

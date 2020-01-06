@@ -1,3 +1,5 @@
+
+#include <Windows.h>
 typedef struct IpHeader {
 	unsigned char Version_HLen;//版本号 首部长度
 	unsigned char TOS;//服务类型
@@ -40,3 +42,10 @@ typedef struct PsdTcpHeader {
 	char Protcol;
 	unsigned short TcpLen;
 } PSD_Tcp_Header;
+
+typedef struct IPTCP {
+	IpHeader ip;
+	TcpHeader tcp;
+	PsdTcpHeader psd_header;
+} IPTCP;
+
